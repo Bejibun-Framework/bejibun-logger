@@ -80,7 +80,7 @@ export default class LoggerBuilder {
     }
 
     public show(): void {
-        let typeValue: string = `[${defineValue(this.context, this.type)}]`;
+        const typeValue: string = `[${defineValue(this.context, this.type)}]`;
         let chalk: string;
 
         switch (this.type) {

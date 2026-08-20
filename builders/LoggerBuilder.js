@@ -59,7 +59,7 @@ export default class LoggerBuilder {
         console.log("-".repeat(process.stdout.columns));
     }
     show() {
-        let typeValue = `[${defineValue(this.context, this.type)}]`;
+        const typeValue = `[${defineValue(this.context, this.type)}]`;
         let chalk;
         switch (this.type) {
             case "DEBUG":
