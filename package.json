@@ -39,6 +39,7 @@
         "format": "prettier --write src --log-level=silent",
         "eslint": "eslint src",
         "lint": "bun run format && bun run eslint",
+        "test": "bun test tests/",
         "build": "bun run lint && tsc -p tsconfig.json && bun run alias && bun run rsync && bun run clean",
         "deploy": "bun run build && bun publish --access public"
     },
