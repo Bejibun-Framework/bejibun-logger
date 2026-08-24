@@ -1,0 +1,12 @@
+{
+    "name": "@bejibun/logger-benchmarks",
+    "private": true,
+    "type": "module",
+    "description": "Speed comparison: baseline (previously published npm release) vs the optimized @bejibun/logger in this repo. Run with `bun run`.",
+    "scripts": {
+        "install-deps": "bun install --cwd .. --no-save chalk @bejibun/utils luxon \"@bejibun-baseline/logger@npm:@bejibun/logger@latest\"",
+        "coldstart": "bun run scripts/coldstart.mjs",
+        "throughput": "bun run scripts/throughput.mjs",
+        "bench": "bun run coldstart && bun run throughput"
+    }
+}

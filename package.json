@@ -36,7 +36,7 @@
         "alias": "tsc-alias -p tsconfig.json",
         "rsync": "rsync -a dist/ ./",
         "clean": "rm -rf dist",
-        "format": "prettier --write src --log-level=silent",
+        "format": "prettier --write src --log-level=silent && prettier --write benchmarks --log-level=silent",
         "eslint": "eslint src",
         "lint": "bun run format && bun run eslint",
         "build": "bun run lint && tsc -p tsconfig.json && bun run alias && bun run rsync && bun run clean",
