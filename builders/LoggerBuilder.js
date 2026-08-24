@@ -1,5 +1,16 @@
-import { defineValue, isNotEmpty } from "@bejibun/utils/utils/utils";
 import chalk from "chalk";
+/** True when the given value is a non-empty string (or any non-null/undefined non-string). */
+const isNotEmpty = (value) => {
+    if (value === undefined || value === null)
+        return false;
+    if (typeof value === "string")
+        return value.trim().length > 0;
+    return true;
+};
+/** Returns `value` when non-empty, otherwise `defaultValue`. */
+const defineValue = (value, defaultValue = null) => {
+    return isNotEmpty(value) ? value : defaultValue;
+};
 /**
  * Colorizers are resolved once at module load instead of being rebuilt through the
  * ChalkBuilder fluent chain on every single log call (new instance + several method
@@ -15,11 +26,9 @@ const LEVEL_COLORS = {
 const pad = (value, length = 2) => String(value).padStart(length, "0");
 /**
  * Native Date formatting instead of Luxon. Luxon's DateTime.now().toFormat(...) does
- * Intl/timezone-table work and, more importantly, `@bejibun/utils`'s barrel export pulls
- * the whole Luxon dependency chain (plus unrelated Enum/Object/Str facades) into memory
- * at cold start just to reach a tiny formatting call. A hand-rolled formatter produces
- * the exact same "yyyy-MM-dd HH:mm:ss.SSS" output at a fraction of the cost, both per
- * call and at startup.
+ * Intl/timezone-table work per call. A hand-rolled formatter produces the exact same
+ * "yyyy-MM-dd HH:mm:ss.SSS" output at a fraction of the cost, both per call and at
+ * startup, and keeps the package free of any `@bejibun/utils` (and thus Luxon) import.
  */
 const formatTimestamp = (date) => `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ` +
     `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}.${pad(date.getMilliseconds(), 3)}`;
