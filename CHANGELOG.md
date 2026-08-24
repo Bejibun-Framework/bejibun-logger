@@ -3,6 +3,36 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [v0.2.0](https://github.com/Bejibun-Framework/bejibun-logger/compare/v0.1.23...v0.2.0) - 2026-08-24
+
+### ⚠️ Breaking Changes
+- Removed the `Chalk` facade and `ChalkBuilder` builder (previously re-exported via `facades/index`); colorizing now happens internally through cached `chalk` colorizers
+
+### 🩹 Fixes
+- `separator()` no longer throws when `process.stdout.columns` is `undefined` (piped / non-TTY output); falls back to an 80-column line
+
+### 📖 Changes
+#### Performance
+- Replaced `Luxon.DateTime.now().toFormat(...)` with a native `Date`-based timestamp formatter, dropping the Luxon dependency chain from the hot path
+- Replaced the per-call `Chalk.setValue(...).inline().*().show()` chain with a single `LEVEL_COLORS` colorizer map resolved once at module load
+- `show()` now emits one pre-built string via a single `console.log` instead of three arguments
+- `Logger.empty()` / `Logger.separator()` now write directly to the console, skipping `LoggerBuilder` allocation
+- Extracted a cached `getSeparatorLine()` (rebuilt only when the terminal width changes)
+
+#### Documentation
+- Added JSDoc across `src`
+
+### 📦 Dependencies
+
+- Removed `@bejibun/utils` `^0.1.29`
+
+### ❤️Contributors
+- Havea Crenata ([@crenata](https://github.com/crenata))
+
+**Full Changelog**: https://github.com/Bejibun-Framework/bejibun-logger/blob/master/CHANGELOG.md
+
+---
+
 ## [v0.1.23](https://github.com/Bejibun-Framework/bejibun-logger/compare/v0.1.17...v0.1.23) - 2026-08-20
 
 ### 🩹 Fixes
