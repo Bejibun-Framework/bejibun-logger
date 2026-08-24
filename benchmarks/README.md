@@ -54,8 +54,8 @@ won't be touched._
 
 |                                        | baseline | optimized | speedup   |
 | -------------------------------------- | -------- | --------- | --------- |
-| Full process (spawn → exit)            | 32.8ms   | 23.9ms    | **1.37x** |
-| Import → first log (logger's own cost) | 24.2ms   | 16.4ms    | **1.48x** |
+| Full process (spawn → exit)            | 37.3ms   | 27.0ms    | **1.38x** |
+| Import → first log (logger's own cost) | 27.4ms   | 18.4ms    | **1.49x** |
 
 <!-- BENCHMARK:COLDSTART:END -->
 
@@ -71,9 +71,9 @@ file (`@bejibun/utils/utils/utils`) and never touches Luxon at all.
 
 | Method                | baseline | optimized | speedup     | baseline ops/s | optimized ops/s |
 | --------------------- | -------- | --------- | ----------- | -------------- | --------------- |
-| `Logger.info(msg)`    | 504.1ms  | 68.7ms    | **7.34x**   | 396,757/s      | 2,912,573/s     |
-| `setContext().warn()` | 482.3ms  | 54.5ms    | **8.85x**   | 414,699/s      | 3,671,060/s     |
-| `Logger.separator()`  | 461.2ms  | 1.9ms     | **241.81x** | 433,684/s      | 104,867,586/s   |
+| `Logger.info(msg)`    | 616.2ms  | 71.5ms    | **8.61x**   | 324,554/s      | 2,795,852/s     |
+| `setContext().warn()` | 552.9ms  | 59.1ms    | **9.36x**   | 361,736/s      | 3,385,291/s     |
+| `Logger.separator()`  | 692.6ms  | 1.9ms     | **371.18x** | 288,756/s      | 107,179,356/s   |
 
 <!-- BENCHMARK:THROUGHPUT:END -->
 
