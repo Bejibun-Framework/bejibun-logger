@@ -1,4 +1,4 @@
-import LoggerBuilder from "@/builders/LoggerBuilder";
+import LoggerBuilder, {getSeparatorLine} from "@/builders/LoggerBuilder";
 
 export default class Logger {
     public static setContext(context: string): LoggerBuilder {
@@ -22,10 +22,12 @@ export default class Logger {
     }
 
     public static empty(): void {
-        return new LoggerBuilder().empty();
+        // No LoggerBuilder needed here: skips the Date/timestamp formatting work that
+        // would otherwise happen just to be thrown away unused.
+        console.log();
     }
 
     public static separator(): void {
-        return new LoggerBuilder().separator();
+        console.log(getSeparatorLine());
     }
 }

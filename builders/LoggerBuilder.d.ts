@@ -1,3 +1,4 @@
+export declare const getSeparatorLine: () => string;
 export default class LoggerBuilder {
     protected timestamp: string;
     protected type: string;
