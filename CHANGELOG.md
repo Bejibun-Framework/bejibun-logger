@@ -22,8 +22,6 @@ All notable changes to this project will be documented in this file.
 
 ### 📦 Dependencies
 
-- Removed `@bejibun/utils` `^0.1.29`
-
 ### ❤️Contributors
 - Havea Crenata ([@crenata](https://github.com/crenata))
 
