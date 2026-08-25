@@ -3,6 +3,34 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [v0.2.1](https://github.com/Bejibun-Framework/bejibun-logger/compare/v0.2.0...v0.2.1) - 2026-08-25
+
+### 🩹 Fixes
+
+### 📖 Changes
+- **`facades/index.ts`**: `export * from "../facades/Logger"` -> `export {default as Logger} from "@/facades/Logger"` --
+  fixes barrel re-export of default class. Both `import Logger from "@bejibun/logger"` and
+  `import {Logger} from "@bejibun/logger"` now work through the barrel.
+- **JSDoc cleanup across all files**:
+    - Removed all past-tense references ("used to", "instead of", "was").
+    - Standardized format: description line, blank line, `@param {type} var - desc`, `@returns {type} desc`.
+    - Removed inline comments that described implementation history.
+- **Logger facade JSDoc**: simplified descriptions (e.g. "Creates a new logger builder configured to log
+  the value at debug level" -> "Logs a message at DEBUG level"). Added `{type}` to all `@param` / `@returns`.
+- **LoggerBuilder JSDoc**: removed past-tense descriptions in class-level and method-level comments
+  (e.g. "instead of Luxon", "previously made").
+
+### 📦 Dependencies
+
+- Removed `@bejibun/utils` `^0.1.29`
+
+### ❤️Contributors
+- Havea Crenata ([@crenata](https://github.com/crenata))
+
+**Full Changelog**: https://github.com/Bejibun-Framework/bejibun-logger/blob/master/CHANGELOG.md
+
+---
+
 ## [v0.2.0](https://github.com/Bejibun-Framework/bejibun-logger/compare/v0.1.23...v0.2.0) - 2026-08-24
 
 ### ⚠️ Breaking Changes

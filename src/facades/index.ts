@@ -1,2 +1,4 @@
-/** Re-exports all facades for `@/facades` consumers. */
-export * from "@/facades/Logger";
+/**
+ * Re-exports all facades.
+ */
+export {default as Logger} from "@/facades/Logger";
