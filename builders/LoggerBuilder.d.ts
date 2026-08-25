@@ -8,9 +8,13 @@ export declare const getSeparatorLine: () => string;
  * Fluent builder for writing formatted log lines to stdout.
  */
 export default class LoggerBuilder {
+    /** The formatted timestamp captured at construction time. */
     protected timestamp: string;
+    /** The log level label (e.g. DEBUG, INFO, WARN, ERROR). */
     protected type: string;
+    /** The log message content. */
     protected value: string;
+    /** The context label shown in the log output. */
     protected context: string;
     /**
      * Creates a new LoggerBuilder with the current timestamp and empty fields.
