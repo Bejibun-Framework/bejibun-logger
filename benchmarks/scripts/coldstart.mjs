@@ -16,6 +16,7 @@ import {spawnSync} from "node:child_process";
 import {fileURLToPath} from "node:url";
 import path from "node:path";
 import {updateReadmeSection} from "./readme-writer.mjs";
+import {printTable} from "./table-format.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TRIALS = 30;
@@ -58,31 +59,44 @@ const optWall = stats(optimized.map((t) => t.wallTime));
 const baseInt = stats(baseline.map((t) => t.internalTime));
 const optInt = stats(optimized.map((t) => t.internalTime));
 
-console.log(`\nCOLD START BENCHMARK (${TRIALS} fresh process spawns per variant)\n`);
+function fmt(ms) {
+    return ms < 1 ? `${(ms * 1000).toFixed(0)}\u00B5s` : `${ms.toFixed(1)}ms`;
+}
 
-console.log("Full process time (spawn -> exit, includes runtime boot):");
-console.log(
-    `  baseline : min ${baseWall.min.toFixed(2)}ms  median ${baseWall.median.toFixed(2)}ms  mean ${baseWall.mean.toFixed(2)}ms`
-);
-console.log(
-    `  optimized: min ${optWall.min.toFixed(2)}ms  median ${optWall.median.toFixed(2)}ms  mean ${optWall.mean.toFixed(2)}ms`
-);
-console.log(`  speedup (median): ${(baseWall.median / optWall.median).toFixed(2)}x\n`);
+function sp(b, o) {
+    const r = b / o;
+    return r >= 1.05 ? `${r.toFixed(2)}x` : r <= 0.95 ? `${r.toFixed(2)}x` : "~1.0x";
+}
 
-console.log("Import + first log only (the logger package's own cold-start cost):");
-console.log(
-    `  baseline : min ${baseInt.min.toFixed(2)}ms  median ${baseInt.median.toFixed(2)}ms  mean ${baseInt.mean.toFixed(2)}ms`
-);
-console.log(
-    `  optimized: min ${optInt.min.toFixed(2)}ms  median ${optInt.median.toFixed(2)}ms  mean ${optInt.mean.toFixed(2)}ms`
-);
-console.log(`  speedup (median): ${(baseInt.median / optInt.median).toFixed(2)}x`);
+printTable({
+    title: "COLD START BENCHMARK",
+    subtitle: `${TRIALS} fresh process spawns per variant`,
+    headers: ["Metric", "Baseline", "Optimized", "Speedup"],
+    rows: [
+        {
+            cells: [
+                "Full process (spawn \u2192 exit)",
+                fmt(baseWall.median),
+                fmt(optWall.median),
+                sp(baseWall.median, optWall.median)
+            ]
+        },
+        {
+            cells: [
+                "Import \u2192 first log (logger only)",
+                fmt(baseInt.median),
+                fmt(optInt.median),
+                sp(baseInt.median, optInt.median)
+            ]
+        }
+    ]
+});
 
 const table = [
     "| | baseline | optimized | speedup |",
     "|---|---|---|---|",
-    `| Full process (spawn → exit) | ${baseWall.median.toFixed(1)}ms | ${optWall.median.toFixed(1)}ms | **${(baseWall.median / optWall.median).toFixed(2)}x** |`,
-    `| Import → first log (logger's own cost) | ${baseInt.median.toFixed(1)}ms | ${optInt.median.toFixed(1)}ms | **${(baseInt.median / optInt.median).toFixed(2)}x** |`
+    `| Full process (spawn \\u2192 exit) | ${baseWall.median.toFixed(1)}ms | ${optWall.median.toFixed(1)}ms | **${(baseWall.median / optWall.median).toFixed(2)}x** |`,
+    `| Import \\u2192 first log (logger only) | ${baseInt.median.toFixed(1)}ms | ${optInt.median.toFixed(1)}ms | **${(baseInt.median / optInt.median).toFixed(2)}x** |`
 ].join("\n");
 
 updateReadmeSection("COLDSTART", table);

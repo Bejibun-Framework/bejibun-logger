@@ -52,10 +52,10 @@ won't be touched._
 
 <!-- BENCHMARK:COLDSTART:START -->
 
-|                                        | baseline | optimized | speedup   |
-| -------------------------------------- | -------- | --------- | --------- |
-| Full process (spawn → exit)            | 37.3ms   | 27.0ms    | **1.38x** |
-| Import → first log (logger's own cost) | 27.4ms   | 18.4ms    | **1.49x** |
+|                                       | baseline | optimized | speedup   |
+| ------------------------------------- | -------- | --------- | --------- |
+| Full process (spawn \u2192 exit)      | 32.3ms   | 23.9ms    | **1.35x** |
+| Import \u2192 first log (logger only) | 24.2ms   | 16.4ms    | **1.48x** |
 
 <!-- BENCHMARK:COLDSTART:END -->
 
@@ -71,9 +71,13 @@ file (`@bejibun/utils/utils/utils`) and never touches Luxon at all.
 
 | Method                | baseline | optimized | speedup     | baseline ops/s | optimized ops/s |
 | --------------------- | -------- | --------- | ----------- | -------------- | --------------- |
-| `Logger.info(msg)`    | 616.2ms  | 71.5ms    | **8.61x**   | 324,554/s      | 2,795,852/s     |
-| `setContext().warn()` | 552.9ms  | 59.1ms    | **9.36x**   | 361,736/s      | 3,385,291/s     |
-| `Logger.separator()`  | 692.6ms  | 1.9ms     | **371.18x** | 288,756/s      | 107,179,356/s   |
+| `Logger.debug(msg)`   | 888.2ms  | 87.9ms    | **10.11x**  | 225,179/s      | 2,276,272/s     |
+| `Logger.info(msg)`    | 977.6ms  | 79.5ms    | **12.29x**  | 204,578/s      | 2,514,413/s     |
+| `Logger.warn(msg)`    | 1090.0ms | 88.4ms    | **12.33x**  | 183,491/s      | 2,262,752/s     |
+| `Logger.error(msg)`   | 1162.2ms | 82.7ms    | **14.05x**  | 172,087/s      | 2,417,259/s     |
+| `setContext().warn()` | 1204.8ms | 83.5ms    | **14.43x**  | 165,997/s      | 2,394,838/s     |
+| `Logger.empty()`      | 1106.3ms | 1.5ms     | **756.88x** | 180,787/s      | 136,833,254/s   |
+| `Logger.separator()`  | 1230.6ms | 1.8ms     | **672.81x** | 162,519/s      | 109,344,409/s   |
 
 <!-- BENCHMARK:THROUGHPUT:END -->
 
