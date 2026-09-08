@@ -218,7 +218,7 @@ export default class LoggerBuilder {
      */
     public show(): void {
         const typeValue: string = `[${defineValue(this.context, this.type)}]`;
-        const colorize = LEVEL_COLORS[this.type] ?? LEVEL_COLORS.INFO;
+        const colorize = LEVEL_COLORS[this.type] || LEVEL_COLORS.INFO;
 
         console.log(`${this.timestamp} ${colorize(typeValue)}: ${this.value}`);
     }
